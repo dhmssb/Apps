@@ -1,4 +1,5 @@
 const router = require('express').Router()
+
 const ctrlAuth = require ('../controllers/auth')
 const auth = require('../middleware/requireLogin')
 

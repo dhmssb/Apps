@@ -5,7 +5,7 @@ const cors = require ('cors')
 
 
 const auth = require ('./routes/auth')
-
+const post = require ('./routes/post')
 
 
 const app = express()
@@ -18,6 +18,7 @@ app.use(cors({
 }))
 
 app.use('/', auth)
+app.use('/post', post)
 // app.use('/article', articleRoutes)
 
 module.exports = app
