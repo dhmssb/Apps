@@ -3,7 +3,9 @@ const bodyParser = require('body-parser')
 const cors = require ('cors')
 
 
-require('./models/user')
+
+const auth = require ('./routes/auth')
+
 
 
 const app = express()
@@ -15,7 +17,7 @@ app.use(cors({
     origin: '*'
 }))
 
-// app.use('/comment', commentRoutes)
+app.use('/', auth)
 // app.use('/article', articleRoutes)
 
 module.exports = app
