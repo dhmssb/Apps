@@ -17,5 +17,7 @@ router.route('/unlike')
     .put(auth, ctrlPost.unlike)
 router.route('/comment')
     .put(auth, ctrlPost.komen)
+router.route('/:postId')
+    .delete(auth, ctrlPost.deletePost)
 
 module.exports = router

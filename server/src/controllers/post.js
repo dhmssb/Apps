@@ -31,6 +31,7 @@ exports.createPost = async (req,res) => {
 exports.getAll = async (req,res) =>{
     Post.find()
     .populate('postedBy', '_id name')
+    .populate('comments.postedBy', '_id name')
     .then(posts => {
         res.status(200).json({posts})
     })
@@ -97,11 +98,36 @@ exports.komen = async (req, res) => {
         new: true
     })
     .populate('comments.postedBy', '_id name')
+    .populate('postedBy', '_id name')
     .exec((err, result) => {
         if(err){
             return res.status(422).json({error:err.message})
         }else{
             res.status(200).json(result)
         }
+    })
+}
+
+exports.deletePost = async (req, res) => {
+    Post.findOne({_id: req.params.postId})
+    .populate('postedBy','_id')
+    .exec((err, post) => {
+        if(err || !post){
+            return res.status(422).json({error : err.message})
+        }
+        if(post.postedBy._id.toString() === req.user._id.toString()){
+            post.remove()
+            .then(result => {
+                res.status(200).json({
+                    message: 'Delete post success'
+                })
+            })
+            .catch(err => {
+                res.status(500).json({
+                    message: err.message
+                })
+            })
+        }
+
     })
 }
