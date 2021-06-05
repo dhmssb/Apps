@@ -137,7 +137,7 @@ exports.getSub = async (req,res) =>{
     .populate('postedBy', '_id name')
     .populate('comments.postedBy', '_id name')
     .then(posts => {
-        res.status(200).json({posts})
+        res.json({posts})
     })
     .catch(err => {
         res.status(500).json({

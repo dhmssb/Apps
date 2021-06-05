@@ -11,7 +11,7 @@ exports.home = async (req, res) => {
 }
 
 exports.signUp = async (req,res) => {
-    const {name, email,password} = req.body
+    const {name, email,password, pic} = req.body
      if(!email || !password || !name) {
        return res.status(422).json({
             message: 'please add all the fields'
@@ -31,7 +31,8 @@ exports.signUp = async (req,res) => {
             const user = new User ({
                 email,
                 password : hashedpassword,
-                name
+                name,
+                pic
             })
             user.save()
             .then(user=>{
@@ -68,12 +69,12 @@ exports.signIn = async (req, res) => {
                 if(doMatch){
             
                     const token = jwt.sign({_id: savedUser._id}, process.env.JWT_SECRET)
-                    const {_id, name, email, followers, following} = savedUser
+                    const {_id, name, email, followers, following, pic} = savedUser
 
                     res.status(200).json({
                         message:'Succesfully login',
                         token: token,
-                        user:{_id, name, email, followers, following}})
+                        user:{_id, name, email, followers, following, pic}})
 
                 }else{
                     res.status(422).json({message: 'Invalid email or password'})

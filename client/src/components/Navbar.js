@@ -10,6 +10,7 @@ const NavBar = () => {
       return [
         <li><Link to="/profile">Profile</Link></li>,
         <li><Link to="/create">Create Post</Link></li>,
+        <li><Link to="/explore">Explore</Link></li>,
         <li>
           <button className="btn #ff4081 pink accent-2"
                 onClick= {() =>{
