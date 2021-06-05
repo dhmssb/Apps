@@ -8,7 +8,7 @@ const auth = require('../middleware/requireLogin')
 
 router.route('/')
     .post(auth, ctrlPost.createPost)
-    .get(ctrlPost.getAll)
+    .get(auth, ctrlPost.getAll)
 router.route('/mypost')    
     .get(auth, ctrlPost.getMy)
 

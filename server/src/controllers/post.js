@@ -3,9 +3,9 @@ const Post = require ('../models/post')
 
 
 exports.createPost = async (req,res) => {
-    const {title, body} = req.body
+    const {title, body, pic} = req.body
 
-    if (!title || !body) return res.status(422).json({
+    if (!title || !body || !pic) return res.status(422).json({
         message: 'please add all the fields'
     })
 
@@ -13,6 +13,7 @@ exports.createPost = async (req,res) => {
     const post = new Post({
         title,
         body,
+        photo: pic,
         postedBy:req.user
     })
     post.save().then(result => {
