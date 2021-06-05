@@ -83,3 +83,25 @@ exports.unlike = async (req, res) => {
         }
     })
 }
+
+exports.komen = async (req, res) => {
+
+    const comment = {
+        text:req.body.text,
+        postedBy: req.user._id
+    }
+
+    Post.findByIdAndUpdate(req.body.postId,{
+        $push:{comments: comment}
+    },{
+        new: true
+    })
+    .populate('comments.postedBy', '_id name')
+    .exec((err, result) => {
+        if(err){
+            return res.status(422).json({error:err.message})
+        }else{
+            res.status(200).json(result)
+        }
+    })
+}

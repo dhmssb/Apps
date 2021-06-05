@@ -15,5 +15,7 @@ router.route('/like')
     .put(auth, ctrlPost.like)
 router.route('/unlike')
     .put(auth, ctrlPost.unlike)
+router.route('/comment')
+    .put(auth, ctrlPost.komen)
 
 module.exports = router
