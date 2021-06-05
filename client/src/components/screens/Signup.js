@@ -26,8 +26,8 @@ const SignIn = () => {
         }).then(res => res.json())
         .then(data =>{
             console.log(data)
-            if(data.message === 'Succesfully login'){
-                M.toast({html: data.message})
+            if(data.message === 'success signup'){
+                M.toast({html: data.message, classes:'#9ccc65 light-green lighten-1'})
                 history.push('/signin')
             }else{
                 M.toast({html: data.message, classes:'#c62828 red darken-3'})
@@ -46,7 +46,7 @@ const SignIn = () => {
                 <h2>InstApp</h2>
                 <input 
                 type='text'
-                placeholder='name'
+                placeholder='username'
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 />
@@ -57,7 +57,7 @@ const SignIn = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 />
                <input 
-                type='text'
+                type='password'
                 placeholder='password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
