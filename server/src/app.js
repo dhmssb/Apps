@@ -6,6 +6,7 @@ const cors = require ('cors')
 
 const auth = require ('./routes/auth')
 const post = require ('./routes/post')
+const user = require ('./routes/user')
 
 
 const app = express()
@@ -21,6 +22,6 @@ app.use(cors({
 
 app.use('/', auth)
 app.use('/post', post)
-// app.use('/article', articleRoutes)
+app.use('/user', user)
 
 module.exports = app
