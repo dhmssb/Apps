@@ -1,8 +1,10 @@
-import React,{useState, useEffect} from 'react'
-
+import React,{useState, useEffect, useContext} from 'react'
+import {UserContext} from '../../App'
 
 const Home = () => {
     const [data, setData] = useState([])
+    const {state, dispatch} = useContext(UserContext)
+
     useEffect(() => {
         fetch('http://localhost:5000/post',{
             headers: {
@@ -10,11 +12,62 @@ const Home = () => {
             }
         }).then(res => res.json())
         .then(result => {
-            console.log(result)
             setData(result.posts)
         })
 
     }, [])
+
+        const likePost = (id) => {
+            fetch('http://localhost:5000/post/like',{
+                method:'put',
+                headers:{
+                    'Content-Type':'application/json',
+                    'Authorization':'Bearer '+localStorage.getItem('jwt')
+                },
+                body:JSON.stringify({
+                    postId: id
+                })
+            }).then(res => res.json())
+            .then(result => {
+                const newData = data.map(item => {
+                    if(item._id == result._id){
+                        return result
+                    }else{
+                        return item
+                    }
+                })
+                setData(newData)
+            }).catch(err => {
+                console.log(err)
+            })
+        }
+
+        const unlikePost = (id) => {
+            fetch('http://localhost:5000/post/unlike',{
+                method:'put',
+                headers:{
+                    'Content-Type':'application/json',
+                    'Authorization':'Bearer '+localStorage.getItem('jwt')
+                },
+                body:JSON.stringify({
+                    postId: id
+                })
+            }).then(res => res.json())
+            .then(result => {
+
+                const newData = data.map(item => {
+                    if(item._id == result._id){
+                        return result
+                    }else{
+                        return item
+                    }
+                })
+                setData(newData)
+            }).catch(err => {
+                console.log(err)
+            })
+        }
+
 
     return(
         <div className='home'>
@@ -27,7 +80,21 @@ const Home = () => {
                          <img src= {item.photo}/>
                        </div>
                         <div className='card-content'>
-                            <i className="material-icons" style={{color:'red'}}>favorite</i>
+                            {item.likes.includes(state._id)
+                            ?   
+                                <i className="material-icons"
+                                style={{color:'red'}}
+                                onClick={() =>{unlikePost(item._id)}}
+                                >favorite</i>
+                            :
+                                <i className="material-icons"
+                                onClick={() =>{likePost(item._id)}}
+                                >favorite_border</i>
+                            
+                            }
+
+                             
+                            <h6>{item.likes.length} likes</h6>
                             <h6>{item.title}</h6>
                             <p>{item.body}</p>
                             <input type='text' placeholder='add a comment'/>
