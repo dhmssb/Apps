@@ -53,3 +53,33 @@ exports.getMy = async (req, res) => {
         res.status(500).json({error:err.message})
     })
 }
+
+exports.like = async (req, res) => {
+
+    Post.findByIdAndUpdate(req.body.postId,{
+        $push:{likes: req.user._id}
+    },{
+        new: true
+    }).exec((err, result) => {
+        if(err){
+            return res.status(422).json({error:err.message})
+        }else{
+            res.status(200).json(result)
+        }
+    })
+}
+
+exports.unlike = async (req, res) => {
+
+    Post.findByIdAndUpdate(req.body.postId,{
+        $pull:{likes: req.user._id}
+    },{
+        new: true
+    }).exec((err, result) => {
+        if(err){
+            return res.status(422).json({error:err.message})
+        }else{
+            res.status(200).json(result)
+        }
+    })
+}

@@ -11,5 +11,9 @@ router.route('/')
     .get(auth, ctrlPost.getAll)
 router.route('/mypost')    
     .get(auth, ctrlPost.getMy)
+router.route('/like')
+    .put(auth, ctrlPost.like)
+router.route('/unlike')
+    .put(auth, ctrlPost.unlike)
 
 module.exports = router
