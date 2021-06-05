@@ -32,6 +32,7 @@ exports.getAll = async (req,res) =>{
     Post.find()
     .populate('postedBy', '_id name')
     .populate('comments.postedBy', '_id name')
+    .sort('-createdAt')
     .then(posts => {
         res.status(200).json({posts})
     })
@@ -136,6 +137,7 @@ exports.getSub = async (req,res) =>{
     Post.find({postedBy:{$in:req.user.following}})
     .populate('postedBy', '_id name')
     .populate('comments.postedBy', '_id name')
+    .sort('-createdAt')
     .then(posts => {
         res.json({posts})
     })
