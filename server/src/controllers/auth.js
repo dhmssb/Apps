@@ -68,12 +68,12 @@ exports.signIn = async (req, res) => {
                 if(doMatch){
             
                     const token = jwt.sign({_id: savedUser._id}, process.env.JWT_SECRET)
-                    const {_id, name, email} = savedUser
+                    const {_id, name, email, followers, following} = savedUser
 
                     res.status(200).json({
                         message:'Succesfully login',
                         token: token,
-                        user:{_id, name, email}})
+                        user:{_id, name, email, followers, following}})
 
                 }else{
                     res.status(422).json({message: 'Invalid email or password'})

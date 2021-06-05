@@ -131,3 +131,17 @@ exports.deletePost = async (req, res) => {
 
     })
 }
+
+exports.getSub = async (req,res) =>{
+    Post.find({postedBy:{$in:req.user.following}})
+    .populate('postedBy', '_id name')
+    .populate('comments.postedBy', '_id name')
+    .then(posts => {
+        res.status(200).json({posts})
+    })
+    .catch(err => {
+        res.status(500).json({
+            error: err.message
+        })
+    })
+}
