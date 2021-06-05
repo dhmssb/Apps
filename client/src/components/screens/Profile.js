@@ -20,11 +20,11 @@ const Profile = () => {
     }, [])
 
     return(
-        <div style={{maxWidth:'550px', margin:'0px auto'}}>
+        <div style={{maxWidth:'700px', margin:'0px auto'}}>
             <div style = {{
                 display:'flex',
                 justifyContent:'space-around',
-                margin:'18 px 0px',
+                margin:'20px 20px',
                 borderBottom:'1px solid grey'
             }}>
                 <div>
@@ -34,10 +34,11 @@ const Profile = () => {
                 </div>
                 <div>
                     <h4>{state?state.name:'loading'}</h4>
+                    <h5>{state?state.email:'loading'}</h5>
                     <div style = {{display:'flex', justifyContent:'space-between', width:'105%'}}>
-                        <h6>40 posts</h6>
-                        <h6>40 followers</h6>
-                        <h6>40 following</h6>
+                        <h6>{mypics.length} posts</h6>
+                        <h6>{state?state.followers.length:'0'} followers</h6>
+                        <h6>{state?state.following.length:'0'} following</h6>
                     </div>
                 </div>
             </div>
@@ -46,7 +47,7 @@ const Profile = () => {
                 {
                     mypics.map(item => {
                         return(
-                            <img key={item._id} className='item' src={item.photo} alt={item.title}/>
+                            <img style={{margin:'12px'}} key={item._id} className='item' src={item.photo} alt={item.title}/>
                         )
                     })
                 }
